@@ -1,23 +1,55 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import CryptoJS from 'crypto-js';
 
 function App() {
+  const [reg_user_value, Set_reg_user_value] = useState('');
+  const [reg_pw_value, Set_reg_pw_value] = useState('');
+  const [log_user_value, Set_log_user_value] = useState('');
+  const [log_pw_value, Set_log_pw_value] = useState('');
+
+  const handleReg = async (event) => {
+    event.preventDefault();
+    const encryptedPassword = CryptoJS.AES.encrypt(reg_pw_value, process.env.REACT_APP_CRYPTKEY).toString();
+    const response = await fetch('http://localhost:3001/register', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: reg_user_value,
+        password: encryptedPassword,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    
+  }
+
+  const handleLog = (event) => {
+    event.preventDefault();
+    
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Login systeem</h1>
+      <div className='reg'>
+        <h2>Registreer</h2>
+        <form className='Register' onSubmit={handleReg}>
+          <input id="reg_user" type="email" placeholder='e-mail' onChange={(e) => Set_reg_user_value(e.target.value)}/>
+          <input id="reg_password" type="password" placeholder='wachtwoord' onChange={(e) => Set_reg_pw_value(e.target.value)}/>
+          <input id="reg_submit" type="submit" value="Registreer" />
+        </form>
+      </div>
+      <div className='log'>
+        <h2>Login</h2>
+          <form className='Login' onSubmit={handleLog}>
+          <input id="log_user" type="email" placeholder='e-mail' onChange={(e) => Set_log_user_value(e.target.value)}/>
+          <input id="log_password" type="password" placeholder='wachtwoord' onChange={(e) => Set_log_pw_value(e.target.value)}/>
+          <input id="log_submit" type="submit" value="Login"/>
+        </form>
+      </div>
     </div>
   );
 }
