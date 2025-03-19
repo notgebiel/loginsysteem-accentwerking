@@ -27,8 +27,21 @@ function App() {
     
   }
 
-  const handleLog = (event) => {
+  const handleLog = async (event) => {
     event.preventDefault();
+    const response = await fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+
+      },
+      body: JSON.stringify({
+        email: log_user_value,
+        password: log_pw_value
+      }),
+    });
+    const data = await response.json()
+    console.log(data);
     
   }
   return (
