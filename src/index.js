@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router';
+import ProfilePage from './pages/profile';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -15,6 +15,10 @@ let router = createBrowserRouter([
   {
       path: '/',
       Component: App,
+  },
+  {
+    path: '/profile',
+    Component: ProfilePage,
   }
 ])
 
