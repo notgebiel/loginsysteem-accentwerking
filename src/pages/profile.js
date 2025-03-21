@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const logout = () => {
         localStorage.removeItem('authToken');
-        window.location.href = '/';
+        navigate('/');
     }
 
     useEffect(() => {
         const token = localStorage.getItem('authToken');
 
         if (!token) {
-            window.location.href = '/';
+            navigate('/')
             alert('Log eerst in');
             return;
         }

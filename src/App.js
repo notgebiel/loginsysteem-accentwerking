@@ -1,9 +1,37 @@
 import './App.css';
 import React, { useState } from 'react';
 import CryptoJS from 'crypto-js';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+
+const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 
 function App() {
+  const handleSuccess = (response) => {
+    console.log('Google login succes: ', response);
+    fetch("http://localhost:3001/google-login", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ token: response.credential })
+    }).then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+        window.location.href = '/profile';
+      }else {
+        console.log('pik en ballen')
+      }
+  }
+  )
+    .catch(error => console.error(error));
+  };
+
+  const handleFailure = (error) => {
+    console.error('Google login mislukt: ', error);
+  };
+
   const [reg_user_value, Set_reg_user_value] = useState('');
   const [reg_pw_value, Set_reg_pw_value] = useState('');
   const [log_user_value, Set_log_user_value] = useState('');
@@ -70,6 +98,13 @@ function App() {
           <input id="log_password" type="password" placeholder='wachtwoord' autoComplete='current-password' onChange={(e) => Set_log_pw_value(e.target.value)}/>
           <input id="log_submit" type="submit" value="Login"/>
         </form>
+        <GoogleOAuthProvider clientId={clientID}>
+    <GoogleLogin
+        onSuccess={handleSuccess}
+        onError={handleFailure}
+    />
+</GoogleOAuthProvider>
+
       </div>
     </div>
   );
