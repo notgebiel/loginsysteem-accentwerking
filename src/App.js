@@ -21,7 +21,7 @@ function App() {
         localStorage.setItem('authToken', data.token);
         window.location.href = '/profile';
       }else {
-        console.log('pik en ballen')
+        console.log('Geen authToken!')
       }
   }
   )
