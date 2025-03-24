@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import NavBar from "../components/navbar";
 
 const ProfilePage = () => {
     const navigate = useNavigate();
@@ -9,8 +10,16 @@ const ProfilePage = () => {
         navigate('/');
     }
 
+    const changePassword = () => {
+        navigate(`/change-password?userId=${user.id}`);
+    }
+
     useEffect(() => {
         const token = localStorage.getItem('authToken');
+        const urlParams = new URLSearchParams(window.location.search)
+        if (urlParams.get('token')) {
+            localStorage.setItem('authToken', urlParams.get('token'));
+        }
 
         if (!token) {
             navigate('/')
@@ -42,9 +51,11 @@ const ProfilePage = () => {
 
     return (
         <div>
+            <NavBar active="profiel" />
             <h1>Welkom, ingelogd met email {user.email}</h1>
             <p>Gebruiker id: {user.id}</p>
             <button onClick={logout}>Log uit</button>
+            <button onClick={changePassword}>Wachtwoord wijzigen</button>
 
         </div>
     )

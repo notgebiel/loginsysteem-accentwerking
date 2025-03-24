@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import CryptoJS from 'crypto-js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
+import NavBar from './components/navbar';
 
 const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -31,6 +32,10 @@ function App() {
   const handleFailure = (error) => {
     console.error('Google login mislukt: ', error);
   };
+
+  const handleMicrosoftLogin = () => {
+    window.location.href = 'http://localhost:3001/auth/microsoft';
+  }
 
   const [reg_user_value, Set_reg_user_value] = useState('');
   const [reg_pw_value, Set_reg_pw_value] = useState('');
@@ -82,6 +87,7 @@ function App() {
   }
   return (
     <div className="App">
+      <NavBar active="login"/>
       <h1>Login systeem</h1>
       <div className='reg'>
         <h2>Registreer</h2>
@@ -99,12 +105,13 @@ function App() {
           <input id="log_submit" type="submit" value="Login"/>
         </form>
         <GoogleOAuthProvider clientId={clientID}>
-    <GoogleLogin
+        <GoogleLogin
         onSuccess={handleSuccess}
         onError={handleFailure}
-    />
-</GoogleOAuthProvider>
-
+        />
+        </GoogleOAuthProvider>
+        <h2>Login met Microsoft</h2><br/>
+        <button onClick={handleMicrosoftLogin}>Login met microsoft</button>
       </div>
     </div>
   );

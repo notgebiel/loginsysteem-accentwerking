@@ -9,6 +9,7 @@ import {
 } from 'react-router';
 //comp imports
 import App from './App';
+import ChangePassword from './pages/changePassword';
 
 
 let router = createBrowserRouter([
@@ -19,6 +20,10 @@ let router = createBrowserRouter([
   {
     path: '/profile',
     Component: ProfilePage,
+  },
+  {
+    path: '/change-password',
+    Component: ChangePassword,
   }
 ])
 
