@@ -10,6 +10,7 @@ import {
 //comp imports
 import App from './App';
 import ChangePassword from './pages/changePassword';
+import resetPassword from './pages/resetPassword';
 
 
 let router = createBrowserRouter([
@@ -24,7 +25,11 @@ let router = createBrowserRouter([
   {
     path: '/change-password',
     Component: ChangePassword,
-  }
+  },
+  {
+    path: '/wachtwoord-vergeten',
+    Component: resetPassword,
+  },
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

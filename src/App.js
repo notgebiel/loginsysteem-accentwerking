@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useState } from 'react';
-import CryptoJS from 'crypto-js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import NavBar from './components/navbar';
@@ -37,6 +36,9 @@ function App() {
     window.location.href = 'http://localhost:3001/auth/microsoft';
   }
 
+  
+
+
   const [reg_user_value, Set_reg_user_value] = useState('');
   const [reg_pw_value, Set_reg_pw_value] = useState('');
   const [log_user_value, Set_log_user_value] = useState('');
@@ -44,7 +46,6 @@ function App() {
 
   const handleReg = async (event) => {
     event.preventDefault();
-    const encryptedPassword = CryptoJS.AES.encrypt(reg_pw_value, process.env.REACT_APP_CRYPTKEY).toString();
     const response = await fetch('http://localhost:3001/register', {
       method: 'POST',
       headers: { 
@@ -52,7 +53,7 @@ function App() {
       },
       body: JSON.stringify({
         email: reg_user_value,
-        password: encryptedPassword,
+        password: reg_pw_value,
       }),
     });
     const data = await response.json();
@@ -85,6 +86,11 @@ function App() {
     }
     
   }
+
+  const wwReset = () => {
+    window.href.location = '/wachtwoord-vergeten';
+  }
+
   return (
     <div className="App">
       <NavBar active="login"/>
@@ -104,6 +110,7 @@ function App() {
           <input id="log_password" type="password" placeholder='wachtwoord' autoComplete='current-password' onChange={(e) => Set_log_pw_value(e.target.value)}/>
           <input id="log_submit" type="submit" value="Login"/>
         </form>
+        <button id="ww_reset" onClick={wwReset} value="Wachtwoord vergeten?"></button>
         <GoogleOAuthProvider clientId={clientID}>
         <GoogleLogin
         onSuccess={handleSuccess}
