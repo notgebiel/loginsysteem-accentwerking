@@ -10,7 +10,8 @@ import {
 //comp imports
 import App from './App';
 import ChangePassword from './pages/changePassword';
-import resetPassword from './pages/resetPassword';
+import ResetPassword from './pages/resetPassword';
+import ResetPasswordTwo from './pages/resetPassword2';
 
 
 let router = createBrowserRouter([
@@ -28,7 +29,11 @@ let router = createBrowserRouter([
   },
   {
     path: '/wachtwoord-vergeten',
-    Component: resetPassword,
+    Component: ResetPassword,
+  },
+  {
+    path: '/nieuw-wachtwoord',
+    Component: ResetPasswordTwo,
   },
 ])
 

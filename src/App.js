@@ -88,7 +88,7 @@ function App() {
   }
 
   const wwReset = () => {
-    window.href.location = '/wachtwoord-vergeten';
+    window.location.href = '/wachtwoord-vergeten';
   }
 
   return (
@@ -110,7 +110,7 @@ function App() {
           <input id="log_password" type="password" placeholder='wachtwoord' autoComplete='current-password' onChange={(e) => Set_log_pw_value(e.target.value)}/>
           <input id="log_submit" type="submit" value="Login"/>
         </form>
-        <button id="ww_reset" onClick={wwReset} value="Wachtwoord vergeten?"></button>
+        <button id="ww_reset" onClick={wwReset}>Wachtwoord vergeten?</button>
         <GoogleOAuthProvider clientId={clientID}>
         <GoogleLogin
         onSuccess={handleSuccess}
