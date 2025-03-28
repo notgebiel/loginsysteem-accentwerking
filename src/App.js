@@ -8,6 +8,11 @@ const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 
 function App() {
+  const [title, setTitle] = useState('Loginsysteem');
+  const messageHandler = async (message) => {
+    setTitle(message);
+     setTimeout(() => setTitle('Loginsysteem'), 10000);
+  }
   const handleSuccess = (response) => {
     console.log('Google login succes: ', response);
     fetch("http://localhost:3001/google-login", {
@@ -58,6 +63,7 @@ function App() {
     });
     const data = await response.json();
     console.log(data);
+    messageHandler(data.message);
     
   }
 
@@ -94,7 +100,7 @@ function App() {
   return (
     <div className="App">
       <NavBar active="login"/>
-      <h1>Login systeem</h1>
+      <h1>{title}</h1>
       <div className='reg'>
         <h2>Registreer</h2>
         <form className='Register' onSubmit={handleReg}>
